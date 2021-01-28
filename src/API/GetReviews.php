@@ -99,12 +99,15 @@ class GetReviews
         ]);
 
         $response = curl_exec($curl);
+    
+        if($response){
+            /** @var array $data */
+            $data = json_decode($response, true);
+            curl_close($curl);
 
-        /** @var array $data */
-        $data = json_decode($response, true);
-        curl_close($curl);
+            return $this->mapIntoModels($data);
+        }
 
-        return $this->mapIntoModels($data);
     }
 
     /**
